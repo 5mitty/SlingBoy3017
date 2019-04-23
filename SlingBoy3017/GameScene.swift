@@ -14,6 +14,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     var topPaddle = SKSpriteNode()
+    var leftPaddle = SKSpriteNode()
+    var rightPaddle = SKSpriteNode()
+    var bottomPaddle = SKSpriteNode()
     
     private var lastUpdateTime : TimeInterval = 0
     
@@ -21,6 +24,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         let border = SKPhysicsBody(edgeLoopFrom: self.frame)
         self.physicsBody = border
+        
+        let topLeft = CGPoint(x: frame.origin.x, y: -frame.origin.y)
+        let topRight = CGPoint(x: -frame.origin.x, y: -frame.origin.y)
+        
+        let top = SKNode()
+        top.name = "top"
+        top.physicsBody = SKPhysicsBody(edgeFrom: topLeft, to: topRight)
+        self.addChild(top)
+        
+        let topPaddle = SKPhysicsBody(rectangleOf: topPaddle)
         
         topPaddle = self.childNode(withName: "topPaddle") as! SKSpriteNode
     }
